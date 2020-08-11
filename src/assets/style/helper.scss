@@ -1,1 +1,8 @@
 $color-highlight:#f00;
+%clearFix{
+    &::after{
+        content: '';
+        clear: both;
+        display: block;
+    }
+}

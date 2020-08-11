@@ -30,18 +30,17 @@ export default {
     display: flex;
     box-shadow: 0 0 3px rgb(0,0,0,0.3);
     flex-direction: row;
-    font-size: 12px;
+    font-size: 18px;
     >.item{
-      padding: 2px 0
-      ;
+      padding: 2px 0;
       width: 33.33333%;
       display: flex;
       justify-content: center;
       align-items: center;
       flex-direction: column;
       .icon{
-        width: 32px;
-        height: 32px;
+        width: 36px;
+        height: 36px;
       }
     }
     >.item.selected{
