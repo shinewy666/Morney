@@ -22,12 +22,22 @@ import {Component} from 'vue-property-decorator';
 })
 export default class Types extends Vue{
     type = '-'; /*'-'表示支出 '+'表示收入*/
+    // @Prop(Number) xxx : number | undefined ;
     selectType(type: string){  /* type只能是'-'和'+'中的一个*/
                  if(type !=='-' && type !=='+'){
                      throw new Error('type is unknown')
                  }
                  this.type=type
              }
+    // mounted(){
+    //     if(this.xxx === undefined){
+    //         console.log('undefined');
+            
+    //     }else{
+    //         console.log(this.xxx.toString());
+            
+    //     }
+    // }
 }
     // export default {
     //     name:'Types',
