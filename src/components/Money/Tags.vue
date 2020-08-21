@@ -13,8 +13,12 @@
 </template>
 
 <script lang="ts">
-    export default {
-        name:'Tags'
+import Vue from 'vue'
+import {Component} from 'vue-property-decorator'
+@Component
+    export default class Tags extends Vue{
+        tags: string[] | undefined;
+        selectedTags: string[] = []
     }
 </script>
 
@@ -39,7 +43,7 @@
                 background: transparent;
                 border: none;
                 color: #999;
-                border-bottom: 1px solid;
+                border-bottom: 2px solid;
             }
         }
     }
