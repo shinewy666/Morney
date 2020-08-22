@@ -2,8 +2,8 @@
 
         <Layout class-prefix='layout'>
             {{record}}
-            <NumberPad @update:value="onUpdateAmount"/>
-            <Types @update:value="onUpdateType"/>
+            <NumberPad :value.sync="record.amount"/>
+            <Types :value.sync="record.type"/>
             <Notes @update:value="onUpdateNotes"/>
             <Tags :data-source.sync="tags" @update:value="onUpdateTags"/>
         </Layout>
@@ -37,14 +37,14 @@
             this.record.notes=value
             
         }
-        onUpdateType(value: string){
-            this.record.type=value
+        // onUpdateType(value: string){
+        //     this.record.type=value
             
-        }
-        onUpdateAmount(value: string){
-            this.record.amount=parseFloat(value)
+        // }
+        // onUpdateAmount(value: string){
+        //     this.record.amount=parseFloat(value)
             
-        }
+        // }
 
     }
 </script>

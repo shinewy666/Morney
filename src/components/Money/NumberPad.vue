@@ -2,7 +2,7 @@
                 <div class="numberPad">
                 <div class="output">{{output}}</div>
                 <div class="buttons" clearfix>                
-                <button @click="output+=1">1</button>
+                <button @click="inputContent">1</button>
                 <button @click="inputContent">2</button>
                 <button @click="inputContent">3</button>
                 <button @click="remove">删除</button>
@@ -22,11 +22,12 @@
 
 <script lang="ts">
 import Vue from 'vue'
-import {Component} from 'vue-property-decorator';
+import {Component,Prop} from 'vue-property-decorator';
 
 @Component
 export default class NumberPad extends Vue{
-    output='0';
+    @Prop()readonly value!: number
+    output = this.value.toString()
     inputContent(event: MouseEvent){
         const button = (event.target as HTMLButtonElement);
         const input = button.textContent as string;
@@ -34,7 +35,7 @@ export default class NumberPad extends Vue{
             return
         }
         if(this.output === '0'){
-            if('0123456789'.indexOf(input)>=0){
+            if('123456789'.indexOf(input)>=0){
                 this.output = input
             }else{
                 this.output += input

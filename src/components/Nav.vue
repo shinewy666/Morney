@@ -30,7 +30,7 @@ export default {
     display: flex;
     box-shadow: 0 0 3px rgb(0,0,0,0.3);
     flex-direction: row;
-    font-size: 18px;
+    font-size: 16px;
     >.item{
       padding: 2px 0;
       width: 33.33333%;

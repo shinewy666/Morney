@@ -17,6 +17,10 @@ import {Component,Prop} from 'vue-property-decorator'
 @Component
     export default class Tags extends Vue{
         @Prop() readonly dataSource: string[] | undefined;
+        //Prop告诉Vue,dataSource 不是 data 是 prop
+        //String 告诉 Vue xxx 运行时是个 String 
+        //dataSource 属性名
+        //string | undefined 告诉 TS xxx 的编译时类型
         selectedTags: string[] = [];
 
         toggle(tag: string){
