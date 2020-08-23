@@ -6,6 +6,7 @@
       <span>编辑标签</span>
     </div>
     <Notes field-name="标签名" placeholder="请输入标签名" />
+    <Button>删除标签</Button>
   </Layout>
 </template>
 
@@ -16,9 +17,10 @@ import tagListModel from "../components/models/tagListModel";
 import Layout from "@/components/Layout.vue";
 import Icon from '@/components/Icon.vue';
 import Notes from '@/components/Money/Notes.vue'
+import Button from '@/components/Button.vue'
 
 @Component({
-  components:{Notes}
+  components:{Button,Notes}
 })
 export default class EditLabel extends Vue {
   created() {
