@@ -2,7 +2,7 @@
 
         <Layout class-prefix='layout'>
             {{recordList}}
-            <NumberPad :value.sync="record.amount" @submit="saveRcord"/>
+            <NumberPad :value.sync="record.amount" @submit="saveRecord"/>
             <Types :value.sync="record.type"/>
             <Notes @update:value="onUpdateNotes"/>
             <Tags :data-source.sync="tags" @update:value="onUpdateTags"/>
@@ -16,9 +16,12 @@
     import Notes from '@/components/Money/Notes.vue';
     import Tags from '@/components/Money/Tags.vue';
     import { Component, Watch } from 'vue-property-decorator';
+    import model from '@/model'
+    
+    
 
     const version = window.localStorage.getItem('version') || '0'
-    const recordList: Record[] = JSON.parse(window.localStorage.getItem('recordList')||'[]')
+    const recordList = model.fetch()
 
         if(version === '0.0.1'){
             //数据库升级，数据迁移
@@ -30,7 +33,7 @@
     
     window.localStorage.setItem('version','0.0.2')//数据库版本
 
-    type Record = {
+    type RecordItem = {
         tags: string[];
         notes: string;
         type: string;
@@ -43,8 +46,8 @@
     export default class Money extends Vue{
 
         tags=['衣','食','住','行'];
-        recordList: Record[]=JSON.parse(window.localStorage.getItem('recordList')||'[]')
-        record: Record={tags:[], notes:'',type:'-',amount:0}
+        recordList: RecordItem[]=recordList
+        record: RecordItem={tags:[], notes:'',type:'-',amount:0}
 
         onUpdateTags(value: string[]){
             this.record.tags=value
@@ -61,14 +64,14 @@
         //     this.record.amount=parseFloat(value)
             
         // }
-        saveRcord(){
-            const record2: Record = JSON.parse(JSON.stringify(this.record))
+        saveRecord(){
+            const record2: RecordItem = model.clone(this.record)
             record2.createdAt = new Date()
             this.recordList.push(record2)
         }
         @Watch('recordList')
         onRecordListChange(){
-            window.localStorage.setItem('recordList',JSON.stringify(this.recordList))
+           model.save(this.recordList)
         }
 
     }
