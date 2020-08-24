@@ -46,7 +46,6 @@ import {Component,Prop} from 'vue-property-decorator'
 
 <style lang="scss" scoped>
     .tags{
-        background: white;
         font-size: 14px;
         padding: 16px;
         > .current {
