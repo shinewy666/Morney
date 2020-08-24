@@ -1,3 +1,4 @@
+import clone from '../../lib/clone';
 type RecordItem = {
     tags: string[];
     notes: string;
@@ -8,8 +9,10 @@ type RecordItem = {
 const localStorageKeyName = 'recordList'
 const recordListModel = {
     data:[] as RecordItem[],
-    clone(data: RecordItem[] | RecordItem){
-        return JSON.parse(JSON.stringify(data))
+    create(record: RecordItem){
+        const record2: RecordItem = clone(record)
+        record2.createdAt = new Date()
+        this.data.push(record2)
     },
     fetch(){
         this.data = JSON.parse(window.localStorage.getItem(localStorageKeyName)||'[]') as RecordItem[]
