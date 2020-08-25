@@ -19,6 +19,7 @@ type TagListModel = {
     remove: (id: string) => boolean;
     save: () => void;
 }
+
 const tagListModel: TagListModel = {
     data:[],
     fetch(){
