@@ -9,7 +9,13 @@ type Tag = {
     id: string;
     name: string;
   }
-  interface Window{
+  type TagListModel={
+    update: (id: string,name: string) => 'success'|'not found'|'duplicated';
+  }
+  interface Window {
     tagList: Tag[];
     createTag: (name: string) => void;
-  }
+    findTag: (id: string) => Tag | undefined;
+    removeTag: (id: string) => boolean;
+    updateTag: TagListModel['update'];//(id:string,name:string)=>'success' | 'not found' | 'duplicated'
+  }  

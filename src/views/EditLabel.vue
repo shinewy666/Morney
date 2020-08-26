@@ -7,7 +7,7 @@
       <span class="rightIcon"></span>
     </div>
     <div class="form-wrapper">
-      <Notes :value="tag.name" @update:value="updateTag" field-name="标签名" placeholder="请输入标签名" />
+      <Notes :value="tag.name" @update:value="update" field-name="标签名" placeholder="请输入标签名" />
     </div>
     <div class="button-wrapper">
       <Button @click="remove">删除标签</Button>
@@ -18,37 +18,36 @@
 <script lang="ts">
 import Vue from "vue";
 import { Component } from "vue-property-decorator";
-import tagListModel from '../components/models/tagListModel';
 import Layout from "@/components/Layout.vue";
 import Icon from '@/components/Icon.vue';
 import Notes from '@/components/Money/Notes.vue'
 import Button from '@/components/Button.vue'
 
+
 @Component({
   components:{Button,Notes}
 })
 export default class EditLabel extends Vue {
-  tag?: {id: string;name: string} = undefined
+  tag?: Tag = undefined;
   created() {
     const id = this.$route.params.id;
-    tagListModel.fetch();
-    const tags = tagListModel.data;
-    const tag = tags.filter((t) => t.id === id)[0];
+    const tag = window.findTag(id);
     if (tag) {
       this.tag = tag
     } else {
       this.$router.replace("/404");
     }
   }
-  updateTag(name: string){
+  update(name: string){
     if(this.tag){
-      tagListModel.update(this.tag.id,name)
+      window.updateTag(this.tag.id,name)
     }
     
   }
   remove(){
     if(this.tag){
-      if(tagListModel.remove(this.tag.id)){
+      
+      if(window.removeTag(this.tag.id)){
         this.$router.back()
       }else{
         window.alert('删除失败')
