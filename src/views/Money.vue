@@ -15,21 +15,20 @@
     import Types from '@/components/Money/Types.vue';
     import Notes from '@/components/Money/Notes.vue';
     import Tags from '@/components/Money/Tags.vue';
-    import { Component, Watch } from 'vue-property-decorator';
+    import { Component} from 'vue-property-decorator';
     import recordListModel from '@/components/models/recordListModel'
-    import tagListModel from '@/components/models/tagListModel'
     
 
     const version = window.localStorage.getItem('version') || '0'
-    const recordList = recordListModel.fetch()
+    
     
 
         if(version === '0.0.1'){
             //数据库升级，数据迁移
-            recordList.forEach(record=>{
+            window.recordList.forEach(record=>{
                 record.createdAt = new Date(2020,0,1)
             })
-            window.localStorage.setItem('recordList',JSON.stringify(recordList))
+            window.localStorage.setItem('recordList',JSON.stringify(window.recordList))
         }
     
     window.localStorage.setItem('version','0.0.2')//数据库版本
@@ -47,7 +46,7 @@
     export default class Money extends Vue{
 
         tags=window.tagList;
-        recordList: RecordItem[]=recordList
+        recordList=window.recordList
         record: RecordItem={tags:[], notes:'',type:'-',amount:0}
 
         onUpdateTags(value: string[]){
@@ -66,13 +65,8 @@
             
         // }
         saveRecord(){
-            recordListModel.create(this.record)
+            window.createRecord(this.record)
         }
-        @Watch('recordList')
-        onRecordListChange(){
-           recordListModel.save()
-        }
-
     }
 </script>
 <style lang="scss">
@@ -80,10 +74,4 @@
         display: flex;
         flex-direction: column-reverse;
     }
-</style>
-<style lang="scss" scoped>
-
-
-
-
 </style>

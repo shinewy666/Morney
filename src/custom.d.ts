@@ -18,4 +18,6 @@ type Tag = {
     findTag: (id: string) => Tag | undefined;
     removeTag: (id: string) => boolean;
     updateTag: TagListModel['update'];//(id:string,name:string)=>'success' | 'not found' | 'duplicated'
+    recordList: RecordItem[];
+    createRecord: (record: RecordItem) => void;
   }  
