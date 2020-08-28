@@ -18,10 +18,9 @@
 <script lang="ts">
 import Vue from "vue";
 import { Component } from "vue-property-decorator";
-import Layout from "@/components/Layout.vue";
-import Icon from '@/components/Icon.vue';
-import Notes from '@/components/Money/Notes.vue'
-import Button from '@/components/Button.vue'
+import Notes from '@/components/Money/Notes.vue';
+import Button from '@/components/Button.vue';
+import store from '../store/index2';
 
 
 @Component({
@@ -31,7 +30,7 @@ export default class EditLabel extends Vue {
   tag?: Tag = undefined;
   created() {
     const id = this.$route.params.id;
-    const tag = window.findTag(id);
+    const tag = store.findTag(id);
     if (tag) {
       this.tag = tag
     } else {
@@ -40,14 +39,14 @@ export default class EditLabel extends Vue {
   }
   update(name: string){
     if(this.tag){
-      window.updateTag(this.tag.id,name)
+      store.updateTag(this.tag.id,name)
     }
     
   }
   remove(){
     if(this.tag){
       
-      if(window.removeTag(this.tag.id)){
+      if(store.removeTag(this.tag.id)){
         this.$router.back()
       }else{
         window.alert('删除失败')
