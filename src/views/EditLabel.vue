@@ -4,7 +4,7 @@
     <div class="navBar">
         <Icon class="leftIcon" name="right" @click="goBack"/>
       <span class="title">编辑标签</span>
-      <span class="rightIcon"></span>
+      <span class="rightIcon"/>
     </div>
     <div class="form-wrapper">
       <Notes :value="tag.name" @update:value="update" field-name="标签名" placeholder="请输入标签名" />
@@ -20,7 +20,6 @@ import Vue from "vue";
 import { Component } from "vue-property-decorator";
 import Notes from '@/components/Money/Notes.vue';
 import Button from '@/components/Button.vue';
-import store from '../store/index2';
 
 
 @Component({
@@ -29,28 +28,26 @@ import store from '../store/index2';
 export default class EditLabel extends Vue {
   tag?: Tag = undefined;
   created() {
-    const id = this.$route.params.id;
-    const tag = store.findTag(id);
-    if (tag) {
-      this.tag = tag
-    } else {
+    //const id = this.$route.params.id;
+    //const tag = //store.findTag(id);
+    if (!this.tag) {
       this.$router.replace("/404");
-    }
+    } 
   }
   update(name: string){
     if(this.tag){
-      store.updateTag(this.tag.id,name)
+      //store.updateTag(this.tag.id,name)
     }
     
   }
   remove(){
     if(this.tag){
-      
-      if(store.removeTag(this.tag.id)){
-        this.$router.back()
-      }else{
-        window.alert('删除失败')
-      }
+      return
+      // if(store.removeTag(this.tag.id)){
+      //   this.$router.back()
+      // }else{
+      //   window.alert('删除失败')
+      // }
     }
     
   }

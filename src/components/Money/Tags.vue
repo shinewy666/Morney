@@ -18,9 +18,16 @@
 import Vue from "vue";
 import { Component, Prop } from "vue-property-decorator";
 import tagStore from "../../store/tagStore";
-@Component
+@Component({
+  computed:{
+    tagList(){
+      // tagList = tagStore.fetchTags();
+      return []
+    }
+  }
+})
 export default class Tags extends Vue {
-  tagList = tagStore.fetchTags();
+  
   selectedTags: string[] = [];
 
   toggle(tag: string) {
@@ -37,7 +44,7 @@ export default class Tags extends Vue {
     if (!name) {
       return window.alert("标签名不能为空");
     }
-    tagStore.createTag(name);
+    // tagStore.createTag(name);
   }
 }
 </script>
