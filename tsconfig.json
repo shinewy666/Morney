@@ -32,7 +32,7 @@
     "src/**/*.tsx",
     "src/**/*.vue",
     "tests/**/*.ts",
-    "tests/**/*.tsx", "src/main.ts"
+    "tests/**/*.tsx", "src/main.ts", "src/mixins/createTag.js"
   ],
   "exclude": [
     "node_modules"
