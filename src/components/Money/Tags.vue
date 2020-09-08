@@ -18,12 +18,13 @@
 import Vue from "vue";
 import { mixins } from 'vue-class-component';
 import { Component, Prop } from "vue-property-decorator";
-import tagStore from "../../store/tagStore";
 import TagHelper from '@/mixins/TagHelper';
 
 @Component
 export default class Tags extends mixins (TagHelper){
-  
+  get tagList(){
+    return this.$store.state.tagList
+  }
   selectedTags: string[] = [];
   created(){
     this.$store.commit('fetchTags')
@@ -37,6 +38,7 @@ export default class Tags extends mixins (TagHelper){
     }
     this.$emit("update:value", this.selectedTags);
   }
+
 }
 </script>
 
