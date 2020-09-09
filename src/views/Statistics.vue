@@ -1,37 +1,30 @@
 <template>
-  
-    <Layout>
-      <Tabs class-prefix="type" :data-source="typeList" :value.sync="type"/>
-      <Tabs class-prefix="interval" :data-source="intervaList" :value.sync="interval"/>
-      <div>
-        type:{{type}}
-        <br/>
-        interval:{{interval}}
-      </div>
-    </Layout>
-
+  <Layout>
+    <Tabs class-prefix="type" :data-source="recordTypeList" :value.sync="type" />
+    <Tabs class-prefix="interval" :data-source="intervaList" :value.sync="interval" />
+    <div>
+      type:{{type}}
+      <br />
+      interval:{{interval}}
+    </div>
+  </Layout>
 </template>
 <script lang='ts'>
 import Types from "../components/Money/Types.vue";
 import Vue from "vue";
 import { Component } from "vue-property-decorator";
-import Tabs from '../components/Tabs.vue';
+import Tabs from "../components/Tabs.vue";
+import intervaList from "../constant/interval";
+import recordTypeList from "../constant/recordTypeList";
 
 @Component({
-  components: { Tabs,Types },
+  components: { Tabs, Types },
 })
 export default class Statistics extends Vue {
   type = "-";
-  interval = 'day'
-  intervaList = [
-    {text:'按天',value:'day'},
-    {text:'按周',value:'week'},
-    {text:'按月',value:'month'}
-    ];
-    typeList = [
-      {text:'支出',value:'-'},
-      {text:'收入',value:'+'}
-    ]
+  interval = "day";
+  intervaList = intervaList;
+  recordTypeList = recordTypeList;
 }
 </script>
 <style lang="scss" scoped>
