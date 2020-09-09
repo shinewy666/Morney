@@ -9,12 +9,12 @@
 <script lang="ts">
 import Vue from "vue";
 import NumberPad from "@/components/Money/NumberPad.vue";
-import Types from "@/components/Money/Types.vue";
 import Notes from "@/components/Money/Notes.vue";
 import Tags from "@/components/Money/Tags.vue";
 import { Component } from "vue-property-decorator";
 import store from "../store/index";
 import recordTypeList from '../constant/recordTypeList';
+import Tabs from '../components/Tabs.vue';
 
 type RecordItem = {
   tags: string[];
@@ -24,7 +24,7 @@ type RecordItem = {
   createdAt?: Date;
 };
 @Component({
-  components: { Tags, Notes, Types, NumberPad },
+  components: { Tags, Notes, NumberPad,Tabs },
 })
 export default class Money extends Vue {
   get recordList() {
