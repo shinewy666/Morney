@@ -2,23 +2,23 @@
   <Layout>
     <Tabs class-prefix="type" :data-source="recordTypeList" :value.sync="type" />
     <Tabs class-prefix="interval" :data-source="intervaList" :value.sync="interval" />
-    <div>
-      type:{{type}}
-      <br />
-      interval:{{interval}}
-    </div>
-    <div>
-      <ol>
-        <li v-for="(group,index) in result" :key="index">
-          <h3>{{group.title}}</h3>
-          <ol>
-            <li v-for="item in group.items" :key="item.id">
-              {{item.amount}} {{item.createdAt}}
-            </li>
-          </ol>
-        </li>
-      </ol>
-    </div>
+
+    <ol>
+      <li v-for="(group,index) in result" :key="index">
+        <h3>{{group.title}}</h3>
+        <ol>
+          <li
+            class="record"
+            v-for="item in group.items"
+            :key="item.id"
+          >
+          <span>{{tagString(item.tags)}}</span>
+          <span class="notes" :style="{marginRight:'auto'}">{{item.notes}}</span>
+          <span>￥{{item.amount}}</span> 
+          </li>
+        </ol>
+      </li>
+    </ol>
   </Layout>
 </template>
 <script lang='ts'>
@@ -26,30 +26,32 @@ import Vue from "vue";
 import { Component } from "vue-property-decorator";
 import Tabs from "../components/Tabs.vue";
 import intervaList from "../constant/interval";
-import recordTypeList from '../constant/recordTypeList';
+import recordTypeList from "../constant/recordTypeList";
 
 @Component({
   components: { Tabs },
 })
 export default class Statistics extends Vue {
-  get recordList(){
-    return (this.$store.state as RootState).recordList
+  tagString(tags: Tag[]){
+    return tags.length === 0 ? '无' : tags.join(',')
   }
-  get result(){
-    const {recordList} = this
-    type HashTableValue = {title: string;items: RecordItem[]}
-    const hashTable: {[key: string]: HashTableValue}={}
-    for(let i = 0; i<recordList.length; i++){
-      const [date,time] = recordList[i].createdAt!.split('T')
+  get recordList() {
+    return (this.$store.state as RootState).recordList;
+  }
+  get result() {
+    const { recordList } = this;
+    type HashTableValue = { title: string; items: RecordItem[] };
+    const hashTable: { [key: string]: HashTableValue } = {};
+    for (let i = 0; i < recordList.length; i++) {
+      const [date, time] = recordList[i].createdAt!.split("T");
       console.log(date);
-      hashTable[date] = hashTable[date] || {title:date,items:[]}
-      hashTable[date].items.push(recordList[i])
-
+      hashTable[date] = hashTable[date] || { title: date, items: [] };
+      hashTable[date].items.push(recordList[i]);
     }
-    return hashTable
+    return hashTable;
   }
-  beforeCreate(){
-    this.$store.commit('fetchRecords')
+  beforeCreate() {
+    this.$store.commit("fetchRecords");
   }
   type = "-";
   interval = "day";
@@ -67,7 +69,26 @@ export default class Statistics extends Vue {
     }
   }
 }
-::v-deep .interval-tabs-item{
+::v-deep .interval-tabs-item {
   height: 48px;
+}
+  %item{
+    padding: 8px 16px;
+    line-height: 24px;
+    display: flex;
+    justify-content: space-between;
+    align-content: center;
+  }
+.title {
+  @extend %item
+}
+.record {
+  background: white;
+  @extend %item
+}
+.notes{
+  margin-right: auto;
+  margin-left:8px;
+  color: #999;
 }
 </style>
