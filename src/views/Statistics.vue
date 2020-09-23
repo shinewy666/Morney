@@ -55,7 +55,7 @@ export default class Statistics extends Vue {
     if (recordList.length == 0) {
       return [];
     }
-    const newList = clone(recordList).sort(
+    const newList = clone(recordList).filter(r=>r.type==this.type).sort(
       (a, b) => dayjs(b.createdAt).valueOf() - dayjs(a.createdAt).valueOf()
     );
     type Result = {title: string;total?: number;items: RecordItem[]}[]
@@ -77,7 +77,9 @@ export default class Statistics extends Vue {
         });
       }
     }
-
+    result.map(group=>{
+      group.total = group.items.reduce((sum,item)=>sum+item.amount,0)
+    })
     return result;
   }
   beforeCreate() {
