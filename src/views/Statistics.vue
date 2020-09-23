@@ -4,7 +4,7 @@
 
     <ol>
       <li v-for="(group,index) in groupedList" :key="index">
-        <h3>{{beautify(group.title)}}<span>{{group.total}}</span></h3>
+        <h3>{{beautify(group.title)}}<span>￥{{group.total}}</span></h3>
         <ol>
           <li class="record" v-for="item in group.items" :key="item.id">
             <span>{{tagString(item.tags)}}</span>
@@ -121,5 +121,10 @@ export default class Statistics extends Vue {
   margin-right: auto;
   margin-left: 8px;
   color: #999;
+}
+h3{
+  display: flex;
+  justify-content: space-between;
+  padding: 10px 12px;
 }
 </style>
