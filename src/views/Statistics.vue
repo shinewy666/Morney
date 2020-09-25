@@ -1,15 +1,23 @@
 <template>
   <Layout>
-    <Tabs class-prefix="type" :data-source="recordTypeList" :value.sync="type" />
+    <Tabs
+      class-prefix="type"
+      :data-source="recordTypeList"
+      :value.sync="type"
+    />
 
     <ol>
-      <li v-for="(group,index) in groupedList" :key="index">
-        <h3>{{beautify(group.title)}}<span>￥{{group.total}}</span></h3>
+      <li v-for="(group, index) in groupedList" :key="index">
+        <h3>
+          {{ beautify(group.title) }}<span>￥{{ group.total }}</span>
+        </h3>
         <ol>
           <li class="record" v-for="item in group.items" :key="item.id">
-            <span>{{tagString(item.tags)}}</span>
-            <span class="notes" :style="{marginRight:'auto'}">{{item.notes}}</span>
-            <span>￥{{item.amount}}</span>
+            <span>{{ tagString(item.tags) }}</span>
+            <span class="notes" :style="{ marginRight: 'auto' }">{{
+              item.notes
+            }}</span>
+            <span>￥{{ item.amount }}</span>
           </li>
         </ol>
       </li>
@@ -31,7 +39,7 @@ const oneday = 86400 * 1000;
 })
 export default class Statistics extends Vue {
   tagString(tags: Tag[]) {
-    return tags.length == 0 ? "无" : tags.map(t => t.name).join(",");
+    return tags.length == 0 ? "无" : tags.map((t) => t.name).join(",");
   }
   beautify(string: string) {
     const now = dayjs();
@@ -52,13 +60,16 @@ export default class Statistics extends Vue {
   }
   get groupedList() {
     const { recordList } = this;
-    if (recordList.length == 0) {
+
+    const newList = clone(recordList)
+      .filter((r) => r.type == this.type)
+      .sort(
+        (a, b) => dayjs(b.createdAt).valueOf() - dayjs(a.createdAt).valueOf()
+      );
+    if (newList.length == 0) {
       return [];
     }
-    const newList = clone(recordList).filter(r=>r.type==this.type).sort(
-      (a, b) => dayjs(b.createdAt).valueOf() - dayjs(a.createdAt).valueOf()
-    );
-    type Result = {title: string;total?: number;items: RecordItem[]}[]
+    type Result = { title: string; total?: number; items: RecordItem[] }[];
     const result: Result = [
       {
         title: dayjs(newList[0].createdAt).format("YYYY-MM-DD"),
@@ -77,9 +88,9 @@ export default class Statistics extends Vue {
         });
       }
     }
-    result.map(group=>{
-      group.total = group.items.reduce((sum,item)=>sum+item.amount,0)
-    })
+    result.map((group) => {
+      group.total = group.items.reduce((sum, item) => sum + item.amount, 0);
+    });
     return result;
   }
   beforeCreate() {
@@ -122,7 +133,7 @@ export default class Statistics extends Vue {
   margin-left: 8px;
   color: #999;
 }
-h3{
+h3 {
   display: flex;
   justify-content: space-between;
   padding: 10px 12px;
