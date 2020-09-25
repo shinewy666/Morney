@@ -6,7 +6,7 @@
       :value.sync="type"
     />
 
-    <ol>
+    <ol v-if="groupedList.length>0">
       <li v-for="(group, index) in groupedList" :key="index">
         <h3>
           {{ beautify(group.title) }}<span>￥{{ group.total }}</span>
@@ -22,6 +22,9 @@
         </ol>
       </li>
     </ol>
+    <div v-else class="noResult">
+      目前没有相关记录
+    </div>
   </Layout>
 </template>
 <script lang='ts'>
@@ -137,5 +140,9 @@ h3 {
   display: flex;
   justify-content: space-between;
   padding: 10px 12px;
+}
+.noResult{
+  padding: 15px;
+  text-align: center;
 }
 </style>
