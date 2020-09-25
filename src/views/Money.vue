@@ -3,7 +3,7 @@
     <NumberPad :value.sync="record.amount" @submit="saveRecord" />
     <Tabs :data-source="recordTypeList" :value.sync = "record.type" />
     <Notes field-name="备注" placeholder="在这里输入备注" @update:value="onUpdateNotes" />
-    <Tags />
+    <Tags @update:value="record.tags = $event"/>
   </Layout>
 </template>
 <script lang="ts">
